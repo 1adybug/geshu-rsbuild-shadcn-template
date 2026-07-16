@@ -10,7 +10,8 @@
 
 - 从 Ant Design + Tailwind CSS 3 迁移到 shadcn/ui + Tailwind CSS 4。
 - 使用 shadcn 预设 `b6HGg41FS`。
-- 启用可点击按钮的 `pointer` 光标行为。
+- shadcn 初始化参数必须包含 `--pointer true`，即 `pointer` 的目标值固定为 `true`。
+- 最终必须启用可点击按钮的 `pointer` 光标行为。
 - 保留目标项目原有业务能力、交互语义、校验逻辑和项目约定。
 - 后续可以继续使用 shadcn CLI 添加组件，并让生成组件使用目标项目配置的别名。
 
@@ -63,7 +64,7 @@
 
 这些内容必须由执行时的最新版 CLI、目标项目依赖解析结果和官方文档产生。
 
-可以固定的只有用户指定的目标，例如预设代码 `b6HGg41FS`、迁移到 Tailwind CSS 4、启用 `pointer`，以及目标项目已有的业务约束。
+可以固定的只有用户指定的目标，例如预设代码 `b6HGg41FS`、迁移到 Tailwind CSS 4、`--pointer true`，以及目标项目已有的业务约束。
 
 ### 4. 不得伪装框架
 
@@ -128,7 +129,7 @@ npx --yes shadcn@latest preset decode b6HGg41FS
 
 将实际输出作为本次迁移的来源，不要假设它与以前的解析结果相同。
 
-特别检查 `pointer` 在当前 CLI 中是布尔开关、带值参数还是已经改名。使用当前帮助信息给出的正确语法，不要机械照抄 `--pointer true` 或历史命令。
+用户指定的固定输入是 `--pointer true`，不得省略或改为 `false`。同时检查 `pointer` 在当前 CLI 中是带值参数、布尔开关还是已经改名：如果当前 CLI 接受显式值，则传入 `--pointer true`；如果当前 CLI 将它声明为布尔开关，则使用语义等价的 `--pointer`；如果参数已经变更，则使用当前官方等价方式实现 `pointer=true`。
 
 ### 阶段 3：获取当前预设的准确生成结果
 
@@ -137,7 +138,7 @@ npx --yes shadcn@latest preset decode b6HGg41FS
 #### 情况 A：当前 CLI 已正式支持目标 Rsbuild 项目
 
 1. 确认工作区可回滚。
-2. 使用当前 CLI 帮助中声明的预设和 `pointer` 参数。
+2. 使用当前 CLI 帮助中声明的语法传入预设和 `pointer=true`。
 3. 让 CLI 初始化或应用预设。
 4. 立即检查 Git 差异，确认没有改写业务文件或采用错误目录。
 
@@ -146,7 +147,7 @@ npx --yes shadcn@latest preset decode b6HGg41FS
 在系统临时目录中生成参考项目：
 
 1. 使用 CLI 当前支持的、与本项目最接近的 React 客户端模板。
-2. 使用预设 `b6HGg41FS` 和当前正确的 `pointer` 参数。
+2. 使用预设 `b6HGg41FS`，并按当前 CLI 语法传入 `pointer=true`。
 3. 不启动参考项目。
 4. 从参考项目读取：
     - `components.json`；
@@ -401,7 +402,8 @@ git status --short
 - 用户原有无关改动未被覆盖。
 - Tailwind CSS 4 已按当前 Rsbuild 官方方案接入。
 - 主题来自本次实时生成的 `b6HGg41FS`，不是历史 CSS 快照。
-- `pointer` 行为已按当前 CLI 语义或等价 CSS 正确启用。
+- 固定输入 `--pointer true` 已按当前 CLI 语义传入，或通过官方等价方式实现。
+- `pointer` 行为已正确启用。
 - shadcn CLI 可以继续在目标项目中添加组件。
 - 生成组件的目录和工具导入别名正确。
 - Ant Design 业务能力已经迁移，或所有阶段性保留项已明确报告。
