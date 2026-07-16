@@ -1,4 +1,5 @@
 import { getErrorMessage, isPlainObject } from "deepsea-tools"
+import { toast } from "sonner"
 
 import { ApiOrigin, ApiPrefix } from "@/constants"
 
@@ -91,8 +92,8 @@ export async function request<T = any, P extends ResponseType = "json">(input: s
                 return response as any
         }
     } catch (error) {
-        if (error instanceof TypeError && error.message === "Failed to fetch") message.error("网络异常，请稍后再试")
-        else if (!hideError) message.error(getErrorMessage(error))
+        if (error instanceof TypeError && error.message === "Failed to fetch") toast.error("网络异常，请稍后再试")
+        else if (!hideError) toast.error(getErrorMessage(error))
 
         throw error
     }

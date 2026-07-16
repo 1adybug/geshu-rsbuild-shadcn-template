@@ -1,6 +1,7 @@
 import { defineConfig } from "@rsbuild/core"
 import { pluginReact } from "@rsbuild/plugin-react"
 import { pluginSvgr } from "@rsbuild/plugin-svgr"
+import { pluginTailwindcss } from "@rsbuild/plugin-tailwindcss"
 import { sdrrRsbuildPlugin } from "sdrr/rsbuild"
 
 export default defineConfig({
@@ -21,6 +22,7 @@ export default defineConfig({
             reactCompiler: true,
         }),
         pluginSvgr(),
+        pluginTailwindcss(),
         sdrrRsbuildPlugin(),
     ],
     server: {
