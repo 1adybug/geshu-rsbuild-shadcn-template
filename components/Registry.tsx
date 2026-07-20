@@ -1,25 +1,15 @@
 import type { FC, ReactNode } from "react"
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { QueryClientProvider } from "@tanstack/react-query"
 import { ThemeProvider } from "next-themes"
 
 import { Toaster } from "@/components/ui/sonner"
 
+import { queryClient } from "@/constants"
+
 export interface RegistryProps {
     children?: ReactNode
 }
-
-const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            retry: 0,
-            refetchOnWindowFocus: false,
-        },
-        mutations: {
-            retry: 0,
-        },
-    },
-})
 
 export const Registry: FC<RegistryProps> = ({ children }) => (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
